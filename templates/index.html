@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Welcome to the Graph Management System</h2>
+    <p>This system allows you to manage directed graphs, track visitors, and find paths between nodes.</p>
+    
+    <div>
+        <h3>Features:</h3>
+        <ul>
+            <li><strong>Node Management</strong> - Create, update, and delete nodes in the graph</li>
+            <li><strong>Edge Management</strong> - Create connections between nodes with optional weights</li>
+            <li><strong>Visitor Tracking</strong> - Create visitors and move them through the graph</li>
+            <li><strong>Path Finding</strong> - Find all possible paths between two nodes</li>
+            <li><strong>Operation Logging</strong> - View a history of all operations performed on the system</li>
+        </ul>
+    </div>
+    
+    <h3>Quick Links</h3>
+    <ul>
+        <li><a href="/nodes" class="btn">Manage Nodes</a></li>
+        <li><a href="/edges" class="btn">Manage Edges</a></li>
+        <li><a href="/visitors" class="btn">Track Visitors</a></li>
+        <li><a href="/logs" class="btn">View Logs</a></li>
+    </ul>
+{% endblock %}

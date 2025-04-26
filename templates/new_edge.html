@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}New Edge - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Create New Edge</h2>
+    
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+    
+    {% if nodes|length < 2 %}
+        <p>You need at least 2 nodes to create an edge. <a href="/nodes/new">Create a node</a> first.</p>
+    {% else %}
+        <form method="POST" action="/edges/new">
+            <div>
+                <label for="source_id">Source Node:</label>
+                <select id="source_id" name="source_id" required>
+                    <option value="">-- Select Source Node --</option>
+                    {% for node in nodes %}
+                        <option value="{{ node.id }}">{{ node.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <label for="target_id">Target Node:</label>
+                <select id="target_id" name="target_id" required>
+                    <option value="">-- Select Target Node --</option>
+                    {% for node in nodes %}
+                        <option value="{{ node.id }}">{{ node.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <label for="name">Edge Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div>
+                <label for="weight">Weight (optional):</label>
+                <input type="number" id="weight" name="weight" value="1.0" step="0.1" min="0">
+            </div>
+            
+            <div>
+                <input type="submit" value="Create Edge">
+            </div>
+        </form>
+    {% endif %}
+    
+    <a href="/edges">Back to Edges</a>
+{% endblock %}

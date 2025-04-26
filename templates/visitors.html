@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Visitors - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Visitor Tracking</h2>
+    <a href="/visitors/new" class="btn">Create New Visitor</a>
+    
+    {% if visitors %}
+        <h3>Existing Visitors</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Current Node</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visitor in visitors %}
+                <tr>
+                    <td>{{ visitor.id }}</td>
+                    <td>{{ visitor.name }}</td>
+                    <td>{{ visitor.current_node.name }}</td>
+                    <td>{{ visitor.created_at }}</td>
+                    <td>
+                        <a href="/visitors/{{ visitor.id }}/move" class="btn">Move</a>
+                        <a href="/visitors/{{ visitor.id }}/history" class="btn">View History</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No visitors found. Create your first visitor to get started.</p>
+    {% endif %}
+{% endblock %}

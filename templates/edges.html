@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Edges - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Edge Management</h2>
+    <a href="/edges/new" class="btn">Create New Edge</a>
+    
+    {% if edges %}
+        <h3>Existing Edges</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Source</th>
+                    <th>Target</th>
+                    <th>Weight</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for edge in edges %}
+                <tr>
+                    <td>{{ edge.id }}</td>
+                    <td>{{ edge.name }}</td>
+                    <td>{{ edge.source.name }}</td>
+                    <td>{{ edge.target.name }}</td>
+                    <td>{{ edge.weight }}</td>
+                    <td>{{ edge.created_at }}</td>
+                    <td>
+                        <a href="/edges/{{ edge.id }}/edit" class="btn">Edit</a>
+                        <a href="/edges/{{ edge.id }}/delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this edge?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No edges found. Create your first edge to get started.</p>
+    {% endif %}
+{% endblock %}

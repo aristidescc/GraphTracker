@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Nodes - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Node Management</h2>
+    <a href="/nodes/new" class="btn">Create New Node</a>
+    
+    {% if nodes %}
+        <h3>Existing Nodes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for node in nodes %}
+                <tr>
+                    <td>{{ node.id }}</td>
+                    <td>{{ node.name }}</td>
+                    <td>{{ node.description }}</td>
+                    <td>{{ node.created_at }}</td>
+                    <td>
+                        <a href="/nodes/{{ node.id }}/edit" class="btn">Edit</a>
+                        <a href="/nodes/{{ node.id }}/delete" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this node?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No nodes found. Create your first node to get started.</p>
+    {% endif %}
+{% endblock %}
