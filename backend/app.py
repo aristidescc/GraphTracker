@@ -16,13 +16,8 @@ def create_app():
     app = Flask(__name__)
     CORS(app)
     
-    # Database configuration
-    # Use DATABASE_URL environment variable for PostgreSQL
-    db_url = os.environ.get('DATABASE_URL')
-    # If the URL starts with postgres://, SQLAlchemy 1.4+ requires postgresql://
-    if db_url and db_url.startswith('postgres://'):
-        db_url = db_url.replace('postgres://', 'postgresql://', 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url or 'sqlite:///graph.db'
+    # Database configuration - Using SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///graph.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Initialize database
