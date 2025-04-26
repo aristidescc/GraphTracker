@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Operation Logs - Graph Management System{% endblock %}
+
+{% block content %}
+    <h2>Operation Logs</h2>
+    
+    {% if logs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Operation Type</th>
+                    <th>Details</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.id }}</td>
+                    <td>{{ log.operation_type }}</td>
+                    <td>{{ log.details }}</td>
+                    <td>{{ log.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No operation logs found.</p>
+    {% endif %}
+{% endblock %}
