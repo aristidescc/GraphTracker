@@ -17,6 +17,21 @@ st.set_page_config(
     layout="wide"
 )
 
+# Show a header
+st.title("Graph Management System")
+st.write("A system for managing directed graphs, tracking visitors, and finding paths")
+
+# Test API connection
+st.header("API Connection Test")
+try:
+    response = requests.get(f"{API_URL}/")
+    if response.status_code == 200:
+        st.success(f"Successfully connected to API: {response.json()}")
+    else:
+        st.error(f"Failed to connect to API: {response.status_code}")
+except Exception as e:
+    st.error(f"Error connecting to API: {str(e)}")
+
 # Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Choose a page", ["Graph Management", "Visitor Tracking", "Path Finding", "Logs"])
