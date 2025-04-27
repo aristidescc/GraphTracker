@@ -1,10 +1,10 @@
 -- This file contains the SQL commands to seed the database with initial data.
 
-TRUNCATE TABLE visitor_movements;
-TRUNCATE TABLE operation_logs;
-TRUNCATE TABLE visitors;
-TRUNCATE TABLE edges;
-TRUNCATE TABLE nodes;
+DELETE FROM visitor_movements;
+DELETE FROM operation_logs;
+DELETE FROM visitors;
+DELETE FROM edges;
+DELETE FROM nodes;
 
 INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (1, 'Obelisco', 'Símbolo de mi ciudad', '2025-04-26 13:39:09.513363', '2025-04-26 14:17:01.242730');
 INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (2, 'Estadio', 'La casa de los Cardenales de Lara', '2025-04-26 13:39:26.890259', '2025-04-26 13:39:26.890282');

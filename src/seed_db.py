@@ -6,12 +6,14 @@ from pathlib import Path
 def seed_database():
     # Asegurar que estamos en el directorio correcto
     script_dir = Path(__file__).parent  # Directorio donde está seed_db.py
-    instance_dir = script_dir.parent / "instance"
-    db_path = instance_dir / "graph.db"
-    sql_path = instance_dir / "seed.sql"
+    instance_dir =  f"{script_dir}/instance"
+    print(instance_dir)
+    print(script_dir)
+    db_path = f"{instance_dir }/graph.db"
+    sql_path =  f"{instance_dir }/seed.sql"
 
     # Verificar si el archivo SQL existe
-    if not sql_path.exists():
+    if not os.path.exists(sql_path):
         print(f"Error: Archivo SQL no encontrado en {sql_path}")
         sys.exit(1)
 
