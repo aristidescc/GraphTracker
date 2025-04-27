@@ -28,9 +28,9 @@ wheels/
 *.egg
 
 # Base de datos SQLite
-/src/instance/graph-bak.db
-!/src/instance/graph.db
-!/src/instance/seed.sql
+/instance/graph-bak.db
+!/instance/graph.db
+!/src/db-scripts/seed.sql
 
 # Archivos de configuración IDE
 .idea/
