@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import pytz
 import json
 
 db = SQLAlchemy()
@@ -89,7 +90,7 @@ class VisitorMovement(db.Model):
     visitor_id = db.Column(db.Integer, db.ForeignKey('visitors.id'), nullable=False)
     node_id = db.Column(db.Integer, db.ForeignKey('nodes.id'), nullable=False)
     edge_id = db.Column(db.Integer, db.ForeignKey('edges.id'), nullable=True)  # Null for initial placement
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now(pytz.UTC))
     
     # Relationships
     node = db.relationship('Node')

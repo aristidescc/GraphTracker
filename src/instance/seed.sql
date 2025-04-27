@@ -1,0 +1,50 @@
+-- This file contains the SQL commands to seed the database with initial data.
+
+TRUNCATE TABLE visitor_movements;
+TRUNCATE TABLE operation_logs;
+TRUNCATE TABLE visitors;
+TRUNCATE TABLE edges;
+TRUNCATE TABLE nodes;
+
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (1, 'Obelisco', 'Símbolo de mi ciudad', '2025-04-26 13:39:09.513363', '2025-04-26 14:17:01.242730');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (2, 'Estadio', 'La casa de los Cardenales de Lara', '2025-04-26 13:39:26.890259', '2025-04-26 13:39:26.890282');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (3, 'Aeropuerto', 'Aeropuerto Jacinto Lara', '2025-04-26 13:39:46.273773', '2025-04-26 13:39:46.273807');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (4, 'Zona Industrial', 'Por la Panamericana', '2025-04-26 13:40:05.712146', '2025-04-26 13:40:05.712172');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (5, 'Catedral', 'Allá llegará la Divina Pastora', '2025-04-26 13:40:26.912890', '2025-04-26 13:40:26.912905');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (6, 'Comercio', 'El epicentro de la 19 y la 20', '2025-04-26 13:40:56.842135', '2025-04-26 13:40:56.842195');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (7, 'Plaza Bolívar', 'Frente al Edificio Nacional y diagonal a la casona de Juancho Gomez', '2025-04-26 13:41:29.566963', '2025-04-26 13:41:29.566993');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (8, 'Hospital', 'HC Antonio María Pineda', '2025-04-26 13:41:52.948506', '2025-04-26 13:41:52.948542');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (9, 'Trinitarias', 'El primer mall de mi ciudad', '2025-04-26 13:42:09.761500', '2025-04-26 13:42:09.761506');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (10, 'Flor de Venezuela', 'La Flor de Hannover', '2025-04-26 13:42:27.702923', '2025-04-26 13:42:27.702929');
+INSERT INTO nodes (id, name, description, created_at, updated_at) VALUES (11, 'Terminal de Pasajeros', 'El de la 42', '2025-04-26 23:21:01.572644', '2025-04-26 23:21:01.572649');
+
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (1, 1, 2, 'Av. Rotaria Alta al Sur', 1.5, '2025-04-26 13:48:11.846315', '2025-04-26 23:12:24.435569');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (2, 2, 1, 'Av. Rotaria Alta al Norte', 2, '2025-04-26 14:29:12.758794', '2025-04-26 23:12:29.550313');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (3, 2, 3, 'Av. Rotaria Baja al Sur', 1, '2025-04-26 14:29:46.274050', '2025-04-26 23:12:35.196370');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (4, 3, 2, 'Av. Rotaria Baja al Norte', 1, '2025-04-26 14:30:07.704668', '2025-04-26 23:12:41.536264');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (5, 1, 4, 'Av. Libertador Alta - Este', 1.5, '2025-04-26 23:11:12.926225', '2025-04-26 23:12:11.662705');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (6, 4, 1, 'Av. Libertador Alta - Oeste', 1.5, '2025-04-26 23:11:54.045340', '2025-04-26 23:12:16.757934');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (7, 4, 9, 'Av Libertador Baja - Este', 3, '2025-04-26 23:13:03.629026', '2025-04-26 23:13:03.629033');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (8, 9, 4, 'Av Libertador Baja - Oeste', 3, '2025-04-26 23:13:18.992602', '2025-04-26 23:13:18.992609');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (9, 4, 5, 'Av Simón Rodriguez', 2.5, '2025-04-26 23:14:04.261212', '2025-04-26 23:14:04.261216');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (10, 8, 4, 'Pata e'' Palo', 3.5, '2025-04-26 23:14:45.172365', '2025-04-26 23:14:45.172373');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (11, 5, 8, 'Av Las Palmas - Este', 3.5, '2025-04-26 23:17:21.222972', '2025-04-26 23:17:21.222983');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (12, 8, 5, 'Av Las Palmas - Oeste', 3.5, '2025-04-26 23:17:55.257808', '2025-04-26 23:17:55.257811');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (13, 8, 10, 'Av Los Abogados - Este', 3, '2025-04-26 23:18:54.434688', '2025-04-26 23:18:54.434695');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (14, 10, 8, 'Av Los Abogados - Oeste', 3, '2025-04-26 23:19:23.682145', '2025-04-26 23:19:23.682152');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (15, 10, 5, 'Av Venezuela Baja - Oeste', 2.5, '2025-04-26 23:19:55.167248', '2025-04-26 23:19:55.167257');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (16, 5, 10, 'Av Venezuela Baja - Este', 2.5, '2025-04-26 23:20:23.902895', '2025-04-26 23:20:23.902907');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (17, 5, 11, 'Av Venezuela Alta - Oeste', 3, '2025-04-26 23:21:45.281710', '2025-04-26 23:21:45.281779');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (18, 11, 5, 'Av Venezuela Alta - Este', 3, '2025-04-26 23:22:07.490337', '2025-04-26 23:22:07.490341');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (19, 11, 2, 'Av Pedro Leon Torres - Oeste', 2, '2025-04-26 23:22:47.030565', '2025-04-26 23:22:47.030598');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (20, 2, 11, 'Av Pedro Leon Torres - Este', 2.5, '2025-04-26 23:23:05.902954', '2025-04-26 23:23:05.902966');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (21, 6, 2, 'Carrera 18', 3.5, '2025-04-26 23:24:01.939371', '2025-04-26 23:24:01.939377');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (22, 3, 7, 'Carrera 15', 4, '2025-04-26 23:24:34.508737', '2025-04-26 23:24:34.508745');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (23, 7, 3, 'Av Fuerzas Armadas', 3, '2025-04-26 23:25:14.870893', '2025-04-26 23:25:14.870900');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (24, 6, 7, 'Calle 25', 2, '2025-04-26 23:26:27.357794', '2025-04-26 23:26:27.357802');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (25, 7, 6, 'Calle 24', 1.5, '2025-04-26 23:26:44.664185', '2025-04-26 23:26:44.664195');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (26, 7, 10, 'Av Argimiro Bracamonte', 3, '2025-04-26 23:27:17.774416', '2025-04-26 23:27:17.774421');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (27, 10, 6, 'Carrera 24', 2.5, '2025-04-26 23:27:58.330299', '2025-04-26 23:27:58.330320');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (28, 9, 10, 'Av Los Leones - Sur', 2, '2025-04-26 23:29:50.077550', '2025-04-26 23:29:50.077595');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (29, 10, 9, 'Av Los Leones - Norte', 2, '2025-04-26 23:30:07.180788', '2025-04-26 23:30:07.180793');
+INSERT INTO edges (id, source_id, target_id, name, weight, created_at, updated_at) VALUES (30, 6, 5, 'Calle 30', 2, '2025-04-26 23:36:18.571615', '2025-04-26 23:36:18.571728');
