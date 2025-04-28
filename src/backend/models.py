@@ -2,6 +2,9 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
 import json
+from typing import Optional, List
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, UniqueConstraint, String, Integer, Float, Text, DateTime
 
 db = SQLAlchemy()
 
@@ -13,18 +16,18 @@ def init_db(app):
 
 class Node(db.Model):
     __tablename__ = 'nodes'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False, unique=True)
-    description = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
+    description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     # Relationships
-    outgoing_edges = db.relationship('Edge', backref='source', foreign_keys='Edge.source_id', cascade='all, delete-orphan')
-    incoming_edges = db.relationship('Edge', backref='target', foreign_keys='Edge.target_id', cascade='all, delete-orphan')
-    visitors = db.relationship('Visitor', backref='current_node', cascade='all, delete-orphan')
-    
+    outgoing_edges: Mapped[List["Edge"]] = relationship('Edge', back_populates='source', foreign_keys='Edge.source_id', cascade='all, delete-orphan')
+    incoming_edges: Mapped[List["Edge"]] = relationship('Edge', back_populates='target', foreign_keys='Edge.target_id', cascade='all, delete-orphan')
+    visitors: Mapped[List["Visitor"]] = relationship('Visitor', back_populates='current_node', cascade='all, delete-orphan')
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -37,18 +40,22 @@ class Node(db.Model):
 
 class Edge(db.Model):
     __tablename__ = 'edges'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    source_id = db.Column(db.Integer, db.ForeignKey('nodes.id'), nullable=False)
-    target_id = db.Column(db.Integer, db.ForeignKey('nodes.id'), nullable=False)
-    name = db.Column(db.String(100), nullable=False)
-    weight = db.Column(db.Float, default=1.0)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    source_id: Mapped[int] = mapped_column(Integer, ForeignKey('nodes.id'), nullable=False)
+    target_id: Mapped[int] = mapped_column(Integer, ForeignKey('nodes.id'), nullable=False)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    weight: Mapped[float] = mapped_column(Float, default=1.0)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relationships
+    source: Mapped["Node"] = relationship('Node', foreign_keys=[source_id], back_populates='outgoing_edges')
+    target: Mapped["Node"] = relationship('Node', foreign_keys=[target_id], back_populates='incoming_edges')
+
     # Ensure that combination of source_id and target_id is unique
-    __table_args__ = (db.UniqueConstraint('source_id', 'target_id', name='_source_target_uc'),)
-    
+    __table_args__ = (UniqueConstraint('source_id', 'target_id', name='_source_target_uc'),)
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -63,16 +70,17 @@ class Edge(db.Model):
 
 class Visitor(db.Model):
     __tablename__ = 'visitors'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    current_node_id = db.Column(db.Integer, db.ForeignKey('nodes.id'), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    current_node_id: Mapped[int] = mapped_column(Integer, ForeignKey('nodes.id'), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
     # Relationships
-    movement_history = db.relationship('VisitorMovement', backref='visitor', cascade='all, delete-orphan')
-    
+    current_node: Mapped["Node"] = relationship('Node', back_populates='visitors')
+    movement_history: Mapped[List["VisitorMovement"]] = relationship('VisitorMovement', back_populates='visitor', cascade='all, delete-orphan')
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -85,17 +93,18 @@ class Visitor(db.Model):
 
 class VisitorMovement(db.Model):
     __tablename__ = 'visitor_movements'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    visitor_id = db.Column(db.Integer, db.ForeignKey('visitors.id'), nullable=False)
-    node_id = db.Column(db.Integer, db.ForeignKey('nodes.id'), nullable=False)
-    edge_id = db.Column(db.Integer, db.ForeignKey('edges.id'), nullable=True)  # Null for initial placement
-    timestamp = db.Column(db.DateTime, default=datetime.now(pytz.UTC))
-    
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    visitor_id: Mapped[int] = mapped_column(Integer, ForeignKey('visitors.id'), nullable=False)
+    node_id: Mapped[int] = mapped_column(Integer, ForeignKey('nodes.id'), nullable=False)
+    edge_id: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey('edges.id'), nullable=True)  # Null for initial placement
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(pytz.UTC))
+
     # Relationships
-    node = db.relationship('Node')
-    edge = db.relationship('Edge')
-    
+    visitor: Mapped["Visitor"] = relationship('Visitor', back_populates='movement_history')
+    node: Mapped["Node"] = relationship('Node')
+    edge: Mapped[Optional["Edge"]] = relationship('Edge')
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -110,12 +119,12 @@ class VisitorMovement(db.Model):
 
 class OperationLog(db.Model):
     __tablename__ = 'operation_logs'
-    
-    id = db.Column(db.Integer, primary_key=True)
-    operation_type = db.Column(db.String(50), nullable=False)
-    details = db.Column(db.Text, nullable=True)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    operation_type: Mapped[str] = mapped_column(String(50), nullable=False)
+    details: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
     def to_dict(self):
         return {
             'id': self.id,
