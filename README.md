@@ -45,4 +45,13 @@ python src/seed_db.py
 ```bash
 python src/integrated_app.py
 ```
+Go to http://localhost:5001 in your web browser to access the application.
+
+## Test and execute API endpoints
+
+This application includes Bruno's API collection to test the API endpoints. First make sure you have Bruno installed:
+
+- [Bruno download page](https://www.usebruno.com/downloads)
+
+Execute bruno and open <project_root>/api-test/GraphTrackerAPI/bruno.json to load the API collection.
 
