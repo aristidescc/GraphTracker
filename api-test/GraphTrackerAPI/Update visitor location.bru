@@ -1,0 +1,22 @@
+meta {
+  name: Update visitor location
+  type: http
+  seq: 8
+}
+
+put {
+  url: http://localhost:5001/api/visitors/:visitor_id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  visitor_id: 1
+}
+
+body:json {
+  {
+    "name": "Aristides C.",
+    "current_node_name": "Obelisco" // este field es opcional
+  }
+}

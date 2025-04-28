@@ -1,0 +1,18 @@
+meta {
+  name: Find all paths by name
+  type: http
+  seq: 10
+}
+
+post {
+  url: http://localhost:5001/api/paths
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "start_node_name": "Flor de Venezuela",
+    "end_node_name": "Plaza Bolívar"
+  }
+}

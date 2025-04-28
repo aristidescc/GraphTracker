@@ -1,0 +1,15 @@
+meta {
+  name: Get Visitor
+  type: http
+  seq: 7
+}
+
+get {
+  url: http://localhost:5001/api/visitors/:visitor_id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  visitor_id: 1
+}

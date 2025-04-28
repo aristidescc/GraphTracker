@@ -1,0 +1,22 @@
+meta {
+  name: Move visitor to given node
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:5001/api/visitors/:visitor_id/move
+  body: json
+  auth: inherit
+}
+
+params:path {
+  visitor_id: 1
+}
+
+body:json {
+  {
+    "edge_name": "Av. Rotaria Alta al Sur",
+    "target_node_name": "Estadio"
+  }
+}
